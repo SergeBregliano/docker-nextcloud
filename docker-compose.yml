@@ -1,0 +1,87 @@
+version: '2.1'
+
+services:
+
+  db:
+    image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    volumes:
+      - './appData/db:/var/lib/mysql'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+    networks:
+      - nextcloud
+
+  redis:
+    image: redis
+    restart: unless-stopped
+    networks:
+      - nextcloud
+
+  app:
+    build: ./docker/app
+    restart: always
+    volumes:
+      - './appData/nextcloud:/var/www/html'
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+    depends_on:
+      - db
+      - redis
+    networks:
+      - nextcloud
+
+  web:
+    build: ./docker/web
+    restart: unless-stopped
+    volumes:
+      - './appData/nextcloud:/var/www/html:ro'
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+    depends_on:
+      - app
+    networks:
+      - gateway
+      - nextcloud
+
+  cron:
+    build: ./docker/app
+    restart: unless-stopped
+    volumes:
+      - './appData/nextcloud:/var/www/html'
+    user: www-data
+    entrypoint: |
+      bash -c 'bash -s <<EOF
+        trap "break;exit" SIGHUP SIGINT SIGTERM
+
+        while [ ! -f /var/www/html/config/config.php ]; do
+          sleep 1
+        done
+
+        while true; do
+          php -f /var/www/html/cron.php
+          sleep 15m
+        done
+      EOF'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - nextcloud
+
+volumes:
+  db: null
+  nextcloud: null
+
+networks:
+  gateway:
+    name: ${FRONTEND_NETWORK}
+  nextcloud:
+    name: ${BACKEND_NETWORK}

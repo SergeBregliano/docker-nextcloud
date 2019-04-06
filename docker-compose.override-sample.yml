@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  db:
+    restart: 'no'
+
+  redis:
+    restart: 'no'
+
+  app:
+    restart: 'no'
+
+  web:
+    restart: 'no'
+    environment:
+      VIRTUAL_HOST: 'test.sbcd.local'
+      STAGE: local
+    ports:
+      - '80:80'
+
+  cron:
+    restart: 'no'
