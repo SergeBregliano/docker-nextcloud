@@ -7,7 +7,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
-      - './appData/db:/var/lib/mysql'
+      - ${DATA_PATH}/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -26,7 +26,7 @@ services:
     build: ./docker/app
     restart: always
     volumes:
-      - './appData/nextcloud:/var/www/html'
+      - ${DATA_PATH}/nextcloud:/var/www/html
     environment:
       - MYSQL_HOST=db
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -42,7 +42,7 @@ services:
     build: ./docker/web
     restart: unless-stopped
     volumes:
-      - './appData/nextcloud:/var/www/html:ro'
+      - ${DATA_PATH}/nextcloud:/var/www/html:ro
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
     depends_on:
@@ -55,7 +55,7 @@ services:
     build: ./docker/app
     restart: unless-stopped
     volumes:
-      - './appData/nextcloud:/var/www/html'
+      - ${DATA_PATH}/nextcloud:/var/www/html
     user: www-data
     entrypoint: |
       bash -c 'bash -s <<EOF
