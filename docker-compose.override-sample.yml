@@ -20,3 +20,7 @@ services:
 
   cron:
     restart: 'no'
+
+networks:
+  gateway:
+  nextcloud:
