@@ -6,7 +6,7 @@ Docker stack for Nextcloud
 Installation des fichiers à partir de [GitLab](https://gitlab.com/Slt/docker-nextcloud).
 
 ```
-git clone https://gitlab.com/Slt/docker-nextcloud.git myWebSiteName
+git clone git@gitlab.com:Slt/docker-nextcloud.git myWebSiteName
 ```
 
 Renommer le fichier ``sample.env`` en ``.env``
