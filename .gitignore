@@ -1,3 +1,4 @@
 .env
 .nova
 docker-compose.override.yml
+/appData
