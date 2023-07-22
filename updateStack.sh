@@ -2,10 +2,10 @@
 
 # Use of docker-compose or docker compose
 DOCKERCOMPOSE=docker-compose
- if !(type -t docker-compose) ; then
+if !(type docker-compose) ; then
     DOCKERCOMPOSE='docker compose'
     echo "Will use docker compose to replace docker-compose command."
- fi
+fi
 
 # Update the stack
 echo 'Updating configuration files'
