@@ -1,4 +1,12 @@
 #!/bin/bash
+
+# Use of docker-compose or docker compose
+DOCKERCOMPOSE=docker-compose
+ if !(type -t docker-compose) ; then
+    DOCKERCOMPOSE='docker compose'
+    echo "Will use docker compose to replace docker-compose command."
+ fi
+
 # Update the stack
 echo 'Updating configuration files'
 echo '============================'
@@ -10,24 +18,24 @@ echo 'Update and build new images'
 echo '==========================='
 docker pull nextcloud:fpm
 docker pull nginx
-docker-compose pull
-docker-compose build
+$DOCKERCOMPOSE pull
+$DOCKERCOMPOSE build
 echo ''
 
 # Stop last stack, delete it, and start the new one
 echo 'Shutting down servers'
 echo '====================='
-docker-compose down
+$DOCKERCOMPOSE down
 echo ''
 
 echo 'Deleting images'
 echo '==============='
-docker-compose rm -f
+$DOCKERCOMPOSE rm -f
 echo ''
 
 echo 'Start new images'
 echo '================'
-docker-compose up -d --remove-orphans
+$DOCKERCOMPOSE up -d --remove-orphans
 echo ''
 
 echo 'Your stack has been correctly updated.'
