@@ -83,7 +83,7 @@ volumes:
 
 networks:
   gateway:
-    external:
-      name: ${FRONTEND_NETWORK}
+    name: ${FRONTEND_NETWORK}
+    external: true
   nextcloud:
-#    name: ${BACKEND_NETWORK}
+    name: ${BACKEND_NETWORK}
