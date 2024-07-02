@@ -26,7 +26,7 @@ En cas d'utilisation derrière un proxy (ou un HAProxy), l'utilisation du protoc
 docker exec -it -u www-data nextcloud-app-1 php occ config:system:set overwriteprotocol --value="https"
 ```
 
-Où `nextcloud_app_1` est le container executant l'appli Nextcloud.
+Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
 
 #### Configuration du format des numéros de téléphone
 
@@ -36,7 +36,41 @@ Dans la version 23 de Nextcloud, les numéros de téléphone ne sont pas configu
 docker exec -it -u www-data nextcloud-app-1 php occ config:system:set default_phone_region --value="FR"
 ```
 
-Où `nextcloud_app_1` est le container executant l'appli Nextcloud.
+Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
+
+#### Configuration de l'heure de début de maintenance planifiée
+
+Dans la version 29 de Nextcloud, l'heure de début de maintenance planifiée n'est pas configurée et provoque une alerte.
+
+```shell
+docker exec -it -u www-data nextcloud-app-1 php occ config:system:set maintenance_window_start --type=integer --value=1
+```
+
+Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
+
+#### Réglage des trusted_domains et overwrite.cli.url
+
+Se connecter à l'application  `nextcloud-app-1` via :
+
+```shell
+docker exec -it nextcloud-app-1 bash
+```
+
+Installer temporairement *nano*. Il disparaitra au prochain démarrage du container :
+
+```shell
+apt-get install nano
+```
+
+Éditer le fichier ``config/config.php``
+
+```shell
+nano config/config.php
+```
+
+Modifier la valeur de **trusted_domains** dans le tableau en remplaçant *localhost* par *web*.
+
+Modifier la valeur de **overwrite.cli.url** de *http://localhost* par *http://web*.
 
 
 
