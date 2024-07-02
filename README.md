@@ -74,6 +74,18 @@ Modifier la valeur de **overwrite.cli.url** de *http://localhost* par *http://we
 
 
 
+## Maintenance
+
+#### Mise à jour des index de la base de données
+
+```shell
+docker exec -it -u www-data nextcloud-app-1 php occ db:add-missing-indices
+```
+
+Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
+
+
+
 ## Utilisation locale en http
 
 L'usage de https est forcé sur la configuration de Nginx. 
