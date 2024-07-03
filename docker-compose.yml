@@ -36,6 +36,8 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=web
       - OVERWRITEPROTOCOL=http
       - REDIS_HOST=redis
+      - PHP_MEMORY_LIMIT=1024M
+      - PHP_UPLOAD_LIMIT=1024M
     depends_on:
       - db
       - redis
