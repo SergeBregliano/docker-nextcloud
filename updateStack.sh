@@ -10,7 +10,7 @@ fi
 # Update the stack
 echo 'Updating configuration files'
 echo '============================'
-git pull https://gitlab.com/Slt/docker-nextcloud.git master
+git pull
 echo ''
 
 # Download the new images version
