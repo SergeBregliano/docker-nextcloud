@@ -50,6 +50,7 @@ services:
     volumes:
       - ${DATA_PATH}/nextcloud:/var/www/html:ro
       - ./docker/web/nginx.conf:/etc/nginx/nginx.conf
+      - ${DATA_PATH}/nginx/logs:/var/log/nginx
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
     depends_on:
