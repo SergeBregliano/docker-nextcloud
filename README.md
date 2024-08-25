@@ -84,7 +84,13 @@ docker exec -it -u www-data nextcloud-app-1 php occ db:add-missing-indices
 
 Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
 
+#### Mise à jour des mimetype
 
+```shell
+docker exec -it -u www-data nextcloud-app-1 php occ maintenance:repair --include-expensive
+```
+
+Où `nextcloud-app-1` est le container executant l'appli Nextcloud.
 
 ## Utilisation locale en http
 
