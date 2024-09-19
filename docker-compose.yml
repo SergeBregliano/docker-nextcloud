@@ -4,8 +4,7 @@ services:
 
   db:
     image: mariadb:11.4
-    #command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb_read_only_compressed=OFF
-    #command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: unless-stopped
     volumes:
       - ${DATA_PATH}/db:/var/lib/mysql
@@ -36,8 +35,8 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=web
       - OVERWRITEPROTOCOL=http
       - REDIS_HOST=redis
-      - PHP_MEMORY_LIMIT=1024M
-      - PHP_UPLOAD_LIMIT=1024M
+      - PHP_MEMORY_LIMIT=2G
+      - PHP_UPLOAD_LIMIT=1G
     depends_on:
       - db
       - redis
