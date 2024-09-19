@@ -26,6 +26,7 @@ services:
   app:
     build: ./docker/app
     restart: unless-stopped
+    user: www-data:www-data
     volumes:
       - ${DATA_PATH}/nextcloud:/var/www/html
     environment:
