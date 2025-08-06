@@ -1,5 +1,3 @@
-version: '2.1'
-
 services:
 
   db:
@@ -89,7 +87,7 @@ volumes:
 
 networks:
   gateway:
-    external:
-      name: ${FRONTEND_NETWORK}
+    external: true
+    name: ${FRONTEND_NETWORK}
   nextcloud:
     #name: ${BACKEND_NETWORK}
