@@ -1,11 +1,11 @@
 services:
 
   db:
-    image: mariadb:11.4
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    image: mariadb:lts
+    command: --transaction-isolation=READ-COMMITTED
     restart: unless-stopped
     volumes:
-      - ${DATA_PATH}/db:/var/lib/mysql
+      - ${DATA_PATH}/db:/var/lib/mysql:z
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -24,7 +24,7 @@ services:
     build: ./docker/app
     restart: unless-stopped
     volumes:
-      - ${DATA_PATH}/nextcloud:/var/www/html
+      - ${DATA_PATH}/nextcloud:/var/www/html:z
     environment:
       - MYSQL_HOST=db
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -60,7 +60,7 @@ services:
     build: ./docker/app
     restart: unless-stopped
     volumes:
-      - ${DATA_PATH}/nextcloud:/var/www/html
+      - ${DATA_PATH}/nextcloud:/var/www/html:z
     user: www-data
     entrypoint: |
       bash -c 'bash -s <<EOF
@@ -82,8 +82,8 @@ services:
       - nextcloud
 
 volumes:
-  db: null
-  nextcloud: null
+  db:
+  nextcloud:
 
 networks:
   gateway:
