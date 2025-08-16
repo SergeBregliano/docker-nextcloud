@@ -7,6 +7,8 @@ services:
 
   app:
     restart: 'no'
+    volumes:
+      - nextcloud:/var/www/html:z
 
   web:
     restart: 'no'
@@ -15,9 +17,13 @@ services:
       STAGE: local
     ports:
       - '80:80'
+    volumes:
+      - nextcloud:/var/www/html:z,ro
 
   cron:
     restart: 'no'
+    volumes:
+      - nextcloud:/var/www/html:z
 
 networks:
   gateway:
